@@ -8,9 +8,19 @@ Proyek ini berfokus pada klasifikasi otomatis teks abstrak/artikel berita ilmiah
 
 ---
 
+## 📂 Struktur Repositori
+Berikut adalah struktur file pendukung utama yang tersedia di dalam repositori ini:
+* **`notebook.ipynb`**: Jupyter Notebook utama berisi seluruh alur kode proyek.
+* **`data_berita.csv`**: Dataset riil hasil *live-scraping* dari arXiv API.
+* **`model_lstm.h5`**: File model pembobotan Deep Learning LSTM yang sudah terlatih.
+* **`tokenizer.pickle`**: Berkas ekstraksi fitur teks untuk kebutuhan tokenisasi sekuensial.
+* **`requirements.txt`**: Daftar dependensi library Python yang dibutuhkan proyek ini.
+
+---
+
 ## 📊 Alur Proyek (Pipeline)
 
-1. **Data Text Scraping:** Mengunduh metadata artikel ilmiah dari arXiv API secara otomatis menggunakan *keywords* terkait NLP dan RNN.
+1. **Data Text Scraping:** Mengunduh metadata artikel ilmiah dari arXiv API secara otomatis menggunakan library `urllib` berdasarkan *keywords* terkait NLP, RNN, dan Transformer.
 2. **Data Augmentation:** Melakukan replikasi data terarah untuk menyeimbangkan distribusi kelas (Total: 1.050 data berita).
 3. **Text Preprocessing:** Normalisasi teks (case folding), penghapusan karakter khusus/tanda baca, tokenisasi, dan eliminasi *stop words* menggunakan library NLTK.
 4. **Feature Extraction:** Vektorisasi teks menggunakan Keras Tokenizer dengan ukuran kosakata (vocab size) 10.000 kata dan penambahan padding dengan batas panjang sekuens 150 token.
@@ -27,9 +37,9 @@ Proyek ini berfokus pada klasifikasi otomatis teks abstrak/artikel berita ilmiah
 
 ## 📉 Hasil Evaluasi Model
 
-Model dilatih selama 50 epoch menggunakan pengoptimasi *Adam* dan fungsi kerugian *Binary Crossentropy*. Berikut adalah ringkasan hasil performa model:
+Model dilatih menggunakan pengoptimasi *Adam* dan fungsi kerugian *Binary Crossentropy* pada arsitektur CPU environment. Berikut adalah ringkasan hasil performa model:
 
-### 1. Akurasi & Loss Plot
+### 1. Akurasi & Loss
 * **Akurasi Akhir:** Model mencapai tingkat akurasi global sebesar **98.00%** pada data pengujian (*test set*).
 * **Kurva Pembelajaran:** Proses belajar berjalan sangat cepat. Mulai dari epoch ke-5, akurasi pelatihan stabil di angka 100% dan akurasi validasi bertahan di kisaran 97.62%.
 * **Gejala Overfitting:** Terdapat indikasi *mild overfitting* karena nilai Validation Loss perlahan merangkak naik sangat tipis (akhir di ~0.27) sementara Training Loss mendekati 0. Namun, generalisasi model tetap aman karena akurasi riil data uji tetap konsisten sangat tinggi.
@@ -37,7 +47,7 @@ Model dilatih selama 50 epoch menggunakan pengoptimasi *Adam* dan fungsi kerugia
 ### 2. Confusion Matrix
 Dari total 210 sampel data uji, model menunjukkan performa klasifikasi yang sangat presisi:
 * **RNN Tradisional:** 100% sampel berhasil diprediksi dengan benar oleh model tanpa ada kesalahan tebakan.
-* **NLP Modern:** Hanya terdapat 2 sampel dari kelas NLP Modern yang salah diprediksi sebagai RNN Tradisional.
+* **NLP Modern:** Hanya terdapat 2 sampel dari kelas NLP Modern yang salah diprediksi sebagai RNN Tradisional (terkecoh akibat kata kunci komparatif di dalam abstrak).
 
 ### 3. Classification Report Detail
 ```text
@@ -54,19 +64,19 @@ RNN Tradisional       0.97      0.99      0.98       115
 ---
 
 ## 🖥️ Antarmuka Pengguna (Gradio Dashboard)
-Proyek ini dilengkapi dengan web dashboard interaktif. Pengguna dapat memasukkan abstrak artikel baru berbahasa Inggris untuk melihat prediksi kategori arsitektur beserta *confidence score* (tingkat kepercayaan model) dan penjelasan konteks teks secara *real-time*.
+Proyek ini dilengkapi dengan web dashboard interaktif dari Gradio. Pengguna dapat memasukkan abstrak artikel baru berbahasa Inggris untuk melihat prediksi kategori arsitektur beserta *confidence score* (tingkat kepercayaan model) dan penjelasan konteks teks secara *real-time*.
 
 ---
 
 ## 🛠️ Cara Menjalankan Proyek
 
-1. Clone repositori ini:
+1. Clone repositori ini ke lokal atau buka via GitHub Codespaces:
    ```bash
    git clone https://github.com
    cd repo-name
    ```
-2. Install dependensi yang diperlukan:
+2. Install seluruh dependensi secara instan lewat file requirements:
    ```bash
-   pip install tensorflow pandas numpy matplotlib seaborn sklearn nltk gradio
+   pip install -r requirements.txt
    ```
-3. Pastikan model `model_lstm.h5` dan `tokenizer.pickle` berada di direktori utama, lalu jalankan file python atau Jupyter Notebook proyek Anda untuk membuka Gradio Dashboard.
+3. Jalankan file `notebook.ipynb` pada Jupyter Notebook/Codespaces kernel Anda, lalu eksekusi cell Gradio di bagian paling bawah untuk memunculkan link dashboard lokal.
