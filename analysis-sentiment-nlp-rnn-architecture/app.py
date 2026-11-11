@@ -9,8 +9,8 @@ st.title("Analysis of Sentiment in Scientific News Articles")
 # Load model & tokenizer dengan path folder baru
 @st.cache_resource
 def load_my_model():
-    model = load_model('analysis-sentiment-nlp/model_lstm.h5')
-    with open('analysis-sentiment-nlp/tokenizer.pickle', 'rb') as handle:
+    model = load_model('analysis-sentiment-nlp-rnn-architecture/model_lstm.h5')
+    with open('analysis-sentiment-nlp-rnn-architecture/tokenizer.pickle', 'rb') as handle:
         tokenizer = pickle.load(handle)
     return model, tokenizer
 
