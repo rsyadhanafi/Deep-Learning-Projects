@@ -1,4 +1,4 @@
-# Analysis of Sentiment in News Articles Regarding Developments in NLP and RNN Architectures Using Deep Learning
+# analysis-sentiment-nlp-rnn-architecture
 
 Proyek ini berfokus pada klasifikasi otomatis teks abstrak/artikel berita ilmiah untuk membedakan antara teknologi **NLP Tradisional (RNN/LSTM)** dan **NLP Modern (Transformer/Attention-based)** menggunakan arsitektur Deep Learning **LSTM (Long Short-Term Memory)**.
 
